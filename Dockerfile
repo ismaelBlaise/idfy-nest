@@ -17,13 +17,14 @@ RUN npm run build
 FROM node:20-alpine AS prod
 WORKDIR /app
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 ENV PORT=4000
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
+COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
 
 EXPOSE 4000
 
-CMD ["node", "dist/main.js"]
+# Attendre Postgres puis démarrer Nest
+CMD ["sh", "-c", "until nc -z postgres 5432; do echo waiting for db; sleep 2; done; node dist/main.js"]
