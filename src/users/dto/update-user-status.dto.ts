@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsEnum, IsOptional } from 'class-validator';
 import { UserStatus } from '../entities/user.entity';
 
