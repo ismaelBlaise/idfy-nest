@@ -6,12 +6,25 @@ import {
   IsOptional,
   Matches,
 } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateUserDto {
+  @ApiPropertyOptional({
+    description: 'Nouvelle adresse email (doit être unique)',
+    example: 'newemail@example.com',
+    format: 'email',
+  })
   @IsOptional()
   @IsEmail({}, { message: 'Email must be a valid email address' })
   email?: string;
 
+  @ApiPropertyOptional({
+    description:
+      'Nouveau mot de passe (min 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)',
+    example: 'NewPassword456!',
+    minLength: 8,
+    maxLength: 50,
+  })
   @IsOptional()
   @IsString({ message: 'Password must be a string' })
   @MinLength(8, {
@@ -26,6 +39,12 @@ export class UpdateUserDto {
   })
   password?: string;
 
+  @ApiPropertyOptional({
+    description: 'Nouveau prénom',
+    example: 'Jean-Michel',
+    minLength: 2,
+    maxLength: 50,
+  })
   @IsOptional()
   @IsString({ message: 'First name must be a string' })
   @MinLength(2, {
@@ -36,6 +55,12 @@ export class UpdateUserDto {
   })
   firstName?: string;
 
+  @ApiPropertyOptional({
+    description: 'Nouveau nom de famille',
+    example: 'Dupont-Martin',
+    minLength: 2,
+    maxLength: 50,
+  })
   @IsOptional()
   @IsString({ message: 'Last name must be a string' })
   @MinLength(2, {
