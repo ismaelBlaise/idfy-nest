@@ -2,6 +2,8 @@ services:
   api:
     build: .
     container_name: idfy-api
+    volumes:
+      - .:/app/
     ports:
       - '4000:4000'
     env_file:
@@ -9,6 +11,7 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    command: sh -c "npm run start:dev"
 
   postgres:
     image: postgres:16

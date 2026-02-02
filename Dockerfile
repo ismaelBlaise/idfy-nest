@@ -23,8 +23,8 @@ ENV PORT=4000
 COPY --from=build /app/dist ./dist
 COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
+COPY . .
 
 EXPOSE 4000
 
-# Attendre Postgres puis démarrer Nest
-CMD ["sh", "-c", "until nc -z postgres 5432; do echo waiting for db; sleep 2; done; node dist/main.js"]
+CMD ["sh", "-c", "until nc -z postgres 5432; do echo waiting for db; sleep 2; done; npm run start:dev"]
